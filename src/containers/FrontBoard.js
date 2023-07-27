@@ -12,8 +12,7 @@ const FrontBoard = () => {
               <h1 className="mb-3" style={{color:"white"}}>BB Naturals</h1>
               <p className="mb-4" style={{color:"white"}}>
                 A short description that goes well with the title and the
-                purpose of the page. Make it
-               look attractive so that users are encouraged to click on
+                purpose of the page. Make it <br />look attractive so that users are encouraged to click on
                 the call-to-action.
               </p>
               <button

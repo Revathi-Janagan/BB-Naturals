@@ -1,0 +1,38 @@
+.custom-align-space {
+  width: 100%;
+}
+
+.align-buttons {
+  margin-left: 100px;
+ 
+}
+.custom-button-nav {
+  margin-right: 30px;
+  background-color: aliceblue;
+  font-size: 12px !important; 
+  text-transform: none; 
+}
+.star-fill-icon {
+  font-size: 1.2rem;
+  color: rgb(153, 159, 227);
+  cursor: pointer;
+  margin-right: 10px;
+}
+.on-sale-icon {
+  font-size: 1.2rem;
+  color: #ff0000;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.on-select-category-icon {
+  font-size: 1.2rem;
+  color: #78dbd9;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.on-tag-icon {
+  font-size: 1.2rem;
+  color: #0e54a3;
+  cursor: pointer;
+  margin-right: 10px;
+}

@@ -1,0 +1,43 @@
+/* Navbar.css */
+.navbar{
+    background-color: #c9cdd3eb;
+}
+.custom-input {
+    width: 1200px !important;
+    border: 1px solid black;
+    margin-right: 20px;
+  }
+  
+  .plus-icon button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: background-color 0.3s;
+    border: none;
+    margin-right: 10px;
+    position: relative; /* Add position relative to the button container */
+  }
+  
+ 
+  .plus-icon button svg {
+    color: #151515; /* Set the color of the plus symbol */
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    font-size: 1.2rem;
+   
+  }
+  
+  .plus-icon button:hover {
+    color: #ecdcdc;
+    background-color: #b0c4ef;
+  }
+  .product-setting-icon {
+    font-size: 1.2rem; /* Adjust the font size of the icon as needed */
+    color: #000; /* Set the color of the icon */
+    cursor: pointer; /* Add a pointer cursor to indicate it's clickable */
+    margin-right: 10px; /* Add some margin to separate it from the plus icon */
+  }
+  

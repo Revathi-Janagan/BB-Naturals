@@ -1,12 +1,15 @@
-
+import React from 'react';
 import './App.css';
-import Home from './components/pages/Home';
+// import Home from './components/pages/Home';
+import AdminBoard from './dashboard/AdminBoard';
+
 
 
 function App() {
   return (
     <div className="App">
-     <Home />      
+     {/* <Home />       */}
+     <AdminBoard />
     </div>
   );
 }

@@ -17,6 +17,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    opacity: 1;
     z-index: -1;
   }
   
@@ -30,10 +31,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-   
+    margin-top: 50px;
+    margin-left: -100px;
   }
   
-  .front-board-content {
-    /* Add any additional styles to the FrontBoard content if needed */
-  }
+ 
   
