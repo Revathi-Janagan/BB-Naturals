@@ -16,7 +16,7 @@
     transition: background-color 0.3s;
     border: none;
     margin-right: 10px;
-    position: relative; /* Add position relative to the button container */
+    position: relative; 
   }
   
  
@@ -35,9 +35,9 @@
     background-color: #b0c4ef;
   }
   .product-setting-icon {
-    font-size: 1.2rem; /* Adjust the font size of the icon as needed */
-    color: #000; /* Set the color of the icon */
-    cursor: pointer; /* Add a pointer cursor to indicate it's clickable */
-    margin-right: 10px; /* Add some margin to separate it from the plus icon */
+    font-size: 1.2rem; 
+    color: #000; 
+    cursor: pointer; 
+    margin-right: 10px;
   }
   

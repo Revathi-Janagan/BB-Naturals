@@ -1,65 +1,54 @@
 .sidenav {
-    width: 50px;
-    background-color: rgb(24, 59, 109);
-    height: 100vh;
-   
-  }
-  
-  .sidenav-menu {
-    list-style: none;
-    padding: 0;
-  }
-  
-  /* .sidenav-item {
-    
-  } */
-  .sidenav-icon:hover,
-  .sidenav-icon:focus{
-    color: whitesmoke;
-  }
-  
-  .sidenav-link {
-    display: block;
-    padding: 10px;
-    color: rgb(140, 127, 236);
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  .sidenav-icon {
-    /* Optional: Adjust the size or other styles of the icons here */
-    font-size: 24px;
-  }
+  width: 50px;
+  background-color: rgb(24, 59, 109);
+  height: 100vh;
+}
 
-  /* Sidenav.css */
-/* Add your existing CSS styles for the sidebar */
-/* ... */
+.sidenav-menu {
+  list-style: none;
+  padding: 0;
+}
 
-/* Custom tooltip style */
+.sidenav-icon:hover,
+.sidenav-icon:focus {
+  color: whitesmoke;
+}
+
+.sidenav-link {
+  display: block;
+  padding: 10px;
+  color: rgb(140, 127, 236);
+  text-align: center;
+  text-decoration: none;
+}
+
+.sidenav-icon {
+  font-size: 24px;
+}
+
 .sidenav-menu .sidenav-link {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .tooltip-text {
-    visibility: hidden;
-    width: 100px;
-    background-color: black;
-    color: white;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  
-  .sidenav-link:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-  }
-  
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 100px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.sidenav-link:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

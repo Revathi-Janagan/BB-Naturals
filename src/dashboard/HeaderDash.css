@@ -2,17 +2,17 @@
     color: whitesmoke;
     background-color: rgb(24, 59, 109);
     height: 50px;
-    z-index: 2; /* Add this to place it above Sidenav */
+    z-index: 2; 
   }
   
   .sidenav {
     position: absolute;
-    top: 50px; /* Adjust this value to control the overlap */
+    top: 50px; 
     left: 0;
     bottom: 0;
-    width: 250px; /* Adjust the width as needed */
-    background-color: #f8f9fa; /* Example background color for the Sidenav */
-    z-index: 1; /* Add this to place it below Navbar */
+    width: 250px;
+    background-color: #f8f9fa; 
+    z-index: 1; 
   }
   
   .title-pos {
