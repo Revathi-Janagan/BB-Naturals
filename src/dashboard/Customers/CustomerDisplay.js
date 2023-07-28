@@ -1,14 +1,13 @@
 import React from 'react'
 import HeaderDash from '../HeaderDash'
 import CustomerContent from './CustomerContent'
+import Layout from '../Layout'
 
 const CustomerDisplay = () => {
   return (
-    <div>
-        <HeaderDash pageName="Customer"/>
-        <CustomerContent />
-     
-    </div>
+    <Layout pageName="Customer">
+    <CustomerContent />
+  </Layout>
   )
 }
 

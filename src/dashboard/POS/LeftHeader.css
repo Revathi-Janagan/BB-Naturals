@@ -1,0 +1,23 @@
+.custom-align-space-left {
+  width: 100%;
+}
+
+.custom-button-nav-left {
+  margin-right: 15px;
+  background-color: aliceblue;
+
+  font-size: 14px;
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.star-fill-icon,
+.on-sale-icon,
+.on-select-category-icon,
+.on-tag-icon {
+  font-size: 1.2rem;
+  margin-right: 8px;
+}

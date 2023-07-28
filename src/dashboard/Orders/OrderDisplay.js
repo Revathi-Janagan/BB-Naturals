@@ -1,14 +1,13 @@
 import React from 'react'
 import Order from './order'
-import HeaderDash from '../HeaderDash'
+import Layout from '../Layout'
+
 
 const OrderDisplay = () => {
   return (
-    <div>
-        <HeaderDash pageName="Order"/>
-        <Order />
-      
-    </div>
+    <Layout pageName="Order">
+    <Order />
+  </Layout>
   )
 }
 

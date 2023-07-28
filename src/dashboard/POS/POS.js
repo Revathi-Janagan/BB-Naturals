@@ -1,14 +1,15 @@
-import React from 'react'
-import HeaderDash from '../HeaderDash'
+
+import React from 'react';
+import HeaderDash from '../HeaderDash';
+import POSMain from './POSMain';
+import Layout from '../Layout';
 
 const POS = () => {
   return (
-    <div>
-        <HeaderDash />
-      <h1>Welcom to pos</h1>
+    <Layout pageName="POS">
+    <POSMain />
+  </Layout>
+  );
+};
 
-    </div>
-  )
-}
-
-export default POS
+export default POS;

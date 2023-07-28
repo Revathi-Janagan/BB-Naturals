@@ -2,15 +2,11 @@
   width: 100%;
 }
 
-.align-buttons {
-  margin-left: 100px;
- 
-}
 .custom-button-nav {
   margin-right: 30px;
   background-color: aliceblue;
-  font-size: 12px !important; 
-  text-transform: none; 
+  font-size: 12px !important;
+  text-transform: none;
 }
 .star-fill-icon {
   font-size: 1.2rem;

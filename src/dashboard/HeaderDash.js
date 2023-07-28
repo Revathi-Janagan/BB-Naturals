@@ -4,29 +4,18 @@ import "./HeaderDash.css";
 import Sidenav from "./Sidenav";
 import IconsNav from "./IconsNavbar";
 
-
-const HeaderDash = ({pageName}) => {
+const HeaderDash = ({ pageName }) => {
   return (
     <header>
-      {/* Header Top */}
-      <div className="header-top text-center d-flex align-items-center">
-        <div className="container">
-          <div className="row">
-            <h3 className="title-pos m-auto">{pageName} - BB Naturals</h3>
-          </div>
+      <div className="header-top text-center d-flex align-items-center " style={{marginLeft : "-100px", width:"1500px"}}>
+        <div className="container header-container">
+          <h3 className="title-pos m-auto">{pageName} - BB Naturals</h3>
         </div>
       </div>
 
-      {/* Navbar */}
       <Navbar />
       <IconsNav />
-      
-     
 
-      
-      
-
-      {/* Sidenav */}
       <Sidenav />
     </header>
   );

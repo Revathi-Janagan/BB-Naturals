@@ -1,0 +1,55 @@
+.right-navbar {
+    /* background-color: #c9cdd3eb; */
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgb(22, 40, 111);
+    color: whitesmoke;
+  }
+  
+ 
+  .plus-icon {
+    display: flex;
+    align-items: center;
+    margin-left: 150px;
+  }
+  
+  .plus-icon button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: background-color 0.3s;
+    border: none;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    
+  }
+  
+  .plus-icon button svg {
+    color: #151515; /* Set the color of the plus symbol */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+  }
+  
+  .plus-icon button:hover {
+    color: #ecdcdc;
+    background-color: #b0c4ef;
+  }
+  
+  .product-setting-icon {
+    font-size: 1.2rem;
+    color: #000;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  h4{
+    margin-right: 20px;
+  }
+  .custom-button-right-header{
+    color: #fff;
+    border: 1px solid whitesmoke;
+  }

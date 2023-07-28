@@ -1,13 +1,10 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
+import { FaPlus ,FaStar} from "react-icons/fa";
 
-import { FaPlus } from "react-icons/fa";
-import AddUser from "./Users/AddUser";
-import "./Navbar.css";
+import "./RightHeader.css";
 
-const Navbar = () => {
+const RightHeader = () => {
   const [hovered, setHovered] = useState(false);
- 
-  const [showForm, setShowForm] = useState(false);
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -16,22 +13,21 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     setHovered(false);
   };
-  const closeModal = () => {
-    setShowForm(true);
-  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light navbar-search ">
+    <nav className="navbar navbar-expand-lg navbar-light right-navbar">
       <div className="container justify-content-center justify-content-md-between">
         <ul className="navbar-nav flex-row">
           <div className="d-flex align-items-center">
             <form className="form-inline">
               <div className="input-group">
-                <input
-                  className="form-control custom-input"
-                  type="search"
-                  placeholder="Products Search"
-                  aria-label="Products Search"
-                />
+                <h4>Customer</h4>
+                <button
+                  className="btn btn-outline custom-button-right-header"
+                  type="submit"
+                >
+                  <FaStar className="star-fill-icon" /> {""}Featured
+                </button>
               </div>
             </form>
           </div>
@@ -46,9 +42,8 @@ const Navbar = () => {
               className={`btn ${
                 hovered ? "btn-primary" : "btn-secondary"
               } rounded-circle`}
-              onClick={closeModal}>
+            >
               <FaPlus className="mr-2" />
-             
             </button>
             <button
               className={`btn ${
@@ -72,9 +67,8 @@ const Navbar = () => {
           </div>
         </ul>
       </div>
-      {showForm && <AddUser show={showForm} onCancel={closeModal} />}
     </nav>
   );
 };
 
-export default Navbar;
+export default RightHeader;
