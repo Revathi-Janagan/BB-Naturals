@@ -21,3 +21,22 @@
   font-size: 1.2rem;
   margin-right: 8px;
 }
+@media screen and (max-width: 768px) {
+  .custom-align-space-left {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .custom-button-nav-left {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .star-fill-icon,
+  .on-sale-icon,
+  .on-select-category-icon,
+  .on-tag-icon {
+    font-size: 1rem;
+    margin-right: 4px;
+  }
+}

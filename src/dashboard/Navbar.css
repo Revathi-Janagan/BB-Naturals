@@ -1,45 +1,63 @@
-
-.navbar-search{
-    background-color: #c9cdd3eb;
-    width: 1350px;
-    
+.navbar-search {
+  background-color: #c9cdd3eb;
+  width: 1350px;
 }
+
 .custom-input {
-    width: 1200px !important;
-    border: 1px solid black;
-    margin-right: -150px;
+  width: 1200px !important;
+  border: 1px solid black;
+  margin-right: -150px;
+}
+
+.plus-icon button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: background-color 0.3s;
+  border: none;
+  margin-right: 10px;
+  position: relative;
+}
+
+.plus-icon button svg {
+  color: #151515;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+}
+
+.plus-icon button:hover {
+  color: #ecdcdc;
+  background-color: #b0c4ef;
+}
+
+.product-setting-icon {
+  font-size: 1.2rem;
+  color: #000;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-search {
+    width: 100%;
+    padding: 10px;
   }
-  
+
+  .custom-input {
+    width: 100% !important;
+    margin-right: 0;
+  }
+
   .plus-icon button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #fff;
-    transition: background-color 0.3s;
-    border: none;
-    margin-right: 10px;
-    position: relative; 
+    margin-right: 5px;
   }
-  
- 
-  .plus-icon button svg {
-    color: #151515; /* Set the color of the plus symbol */
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    font-size: 1.2rem;
-   
-  }
-  
-  .plus-icon button:hover {
-    color: #ecdcdc;
-    background-color: #b0c4ef;
-  }
+
   .product-setting-icon {
-    font-size: 1.2rem; 
-    color: #000; 
-    cursor: pointer; 
-    margin-right: 10px;
+    font-size: 1rem;
+    margin-right: 5px;
   }
-  
+}

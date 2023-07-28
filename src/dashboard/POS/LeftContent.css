@@ -6,5 +6,11 @@
     width: 100%;
   }
   
-  
+  @media screen and (max-width: 768px) {
+    .left-content-container {
+      
+      width: 80%;
+      margin: 0 auto; 
+    }
+  }
   
