@@ -3,16 +3,16 @@ import Navbar from "./Navbar";
 import "./HeaderDash.css";
 import Sidenav from "./Sidenav";
 import IconsNav from "./IconsNavbar";
-import GridForDisplay from "./GridForDisplay";
 
-const HeaderDash = () => {
+
+const HeaderDash = ({pageName}) => {
   return (
     <header>
       {/* Header Top */}
       <div className="header-top text-center d-flex align-items-center">
         <div className="container">
           <div className="row">
-            <h3 className="title-pos m-auto">Products - BB Naturals</h3>
+            <h3 className="title-pos m-auto">{pageName} - BB Naturals</h3>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@ const HeaderDash = () => {
       <Navbar />
       <IconsNav />
       
-      <GridForDisplay />
+     
 
       
       

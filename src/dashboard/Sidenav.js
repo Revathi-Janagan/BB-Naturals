@@ -13,25 +13,25 @@ const Sidenav = () => {
     >
       <ul className="sidenav-menu">
         <li className="sidenav-item">
-          <a className="sidenav-link" href="#" title="Products">
+          <a className="sidenav-link" href="/" title="Products">
             <FaBox className="sidenav-icon" />
             <span className="tooltip-text">Products</span>
           </a>
         </li>
         <li className="sidenav-item">
-          <a className="sidenav-link" href="#" title="POS">
+          <a className="sidenav-link" href="/pos" title="POS">
             <FaCashRegister className="sidenav-icon" />
             <span className="tooltip-text">POS</span>
           </a>
         </li>
         <li className="sidenav-item">
-          <a className="sidenav-link" href="#" title="Order">
+          <a className="sidenav-link" href="/order" title="Order">
             <FaClipboardList className="sidenav-icon" />
             <span className="tooltip-text">Order</span>
           </a>
         </li>
         <li className="sidenav-item">
-          <a className="sidenav-link" href="#" title="Customer">
+          <a className="sidenav-link" href="/customer" title="Customer">
             <FaUsers className="sidenav-icon" />
             <span className="tooltip-text">Customer</span>
           </a>
