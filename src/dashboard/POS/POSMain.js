@@ -1,60 +1,50 @@
-// POSMain.js
-import React, { useState, useEffect, useCallback } from 'react';
-import { Container } from 'react-bootstrap';
-import './POSMain.css'; 
-import LeftDiv from './LeftDiv';
-import RightDiv from './RightDiv';
-import RightContent from './RightContent';
+import React, { useState } from 'react';
+import SplitPane, { Pane } from 'split-pane-react';
+import 'split-pane-react/esm/themes/default.css';
 import LeftContent from './LeftContent';
+import RightContent from './RightContent';
+import './POSMain.css'; // Import your custom CSS file
 
 const POSMain = () => {
-  const [sliderPosition, setSliderPosition] = useState(50);
-  const [resizing, setResizing] = useState(false);
+  const [sizes, setSizes] = useState([750, '50%', 'auto']); 
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const handleSliderMouseDown = () => {
-    setResizing(true);
+  const handleAddToCart = (item) => {
+    setSelectedItems((prevItems) => [...prevItems, item]);
   };
+  const handleRemoveItem = (index) =>{
+    setSelectedItems((prevItems) =>{
+      const updatedItems = [...prevItems];
+      updatedItems.splice(index,1);
+      return updatedItems;
+    })
 
-  const handleSliderMouseUp = () => {
-    setResizing(false);
+  }
+
+  const layoutCSS = {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
   };
-
-  const handleSliderMouseMove = useCallback((event) => {
-    if (resizing) {
-      const containerWidth = document.getElementById('main-container').offsetWidth;
-      const newSliderPosition = (event.clientX / containerWidth) * 100;
-      setSliderPosition(Math.max(30, Math.min(newSliderPosition, 70))); // Limit resizing between 30% and 70%
-    }
-  }, [resizing]);
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      handleSliderMouseMove(event);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleSliderMouseUp);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleSliderMouseUp);
-    };
-  }, [resizing, handleSliderMouseMove]);
 
   return (
-    <Container fluid className="main-container" id="main-container">
-      <div className="left-content" style={{ flex: sliderPosition }}>
-        <LeftContent />
-      </div>
-      <div
-        className="slider"
-        style={{ left: `calc(${sliderPosition}% - 5px)` }}
-        onMouseDown={handleSliderMouseDown}
-      ></div>
-      <div className="right-content" style={{ flex: 100 - sliderPosition }}>
-        <RightContent />
-      </div>
-    </Container>
+    <div style={{ height: '100vh', position: 'relative' }}>
+      <SplitPane split="vertical" sizes={sizes} onChange={setSizes}>
+        <Pane>
+          <div style={{ ...layoutCSS, background: '#ddd' }}>
+          <LeftContent onAddToCart={handleAddToCart} />
+          </div>
+        </Pane>
+        <Pane>
+          <div style={{ ...layoutCSS, background: '#d5d7d9' }}>
+          <RightContent selectedItems={selectedItems} onRemoveItem = {handleRemoveItem} />
+          </div>
+        </Pane>
+      </SplitPane>
+      
+    </div>
   );
 };
 

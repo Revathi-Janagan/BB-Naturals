@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -8,27 +7,21 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
+import { FaDollarSign   } from "react-icons/fa";
+import "./RightDiv.css"
+
 
 const columns = [
-  { id: 'image', label: 'Image', minWidth: 150 ,},
+  { id: 'image', label: 'Image', minWidth: 150 },
   { id: 'product', label: 'Product', minWidth: 100 },
   { id: 'price', label: 'Price', minWidth: 100, align: 'right' },
+  { id: 'remove', label: 'Remove', minWidth: 100, align: 'center' }, 
 ];
 
-function createData(image, product, price) {
-  return { image, product, price };
-}
-
-const rows = [
-//   createData('', 'Drama Ice', '$6.00'),
-//   createData('', 'Repair Mask', '$8.00'),
-<h3>Card is Empty</h3>
-  // Add more data rows here...
-];
-
-const RightDiv = () => {
+const RightDiv = ({ selectedItems, onRemoveItem }) => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -39,47 +32,76 @@ const RightDiv = () => {
     setPage(0);
   };
 
+  const handleRemoveItem = (index) => {
+    onRemoveItem(index);
+  };
+  const calculateTotal = () =>{
+    let total = 0;
+    selectedItems.forEach(item => {
+      total += parseFloat (item.price.replace("$", ""));
+      
+    });
+    return total.toFixed(2);
+
+  }
+
   return (
-    <Paper sx={{ width: '95%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.orderNumber}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    );
-                  })}
+    <div className="right-div-container custom-right-table">
+      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+             
+              {selectedItems.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    <h3>Card is Empty</h3>
+                  </TableCell>
                 </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+              ) : (
+                selectedItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell align="left">{row.image}</TableCell>
+                    <TableCell align="left">{row.product}</TableCell>
+                    <TableCell align="right">{row.price}</TableCell>
+                    <TableCell align="center">
+                      <Button variant="outlined" onClick={() => handleRemoveItem(index)}>
+                        -
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={selectedItems.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+      <div className="right-div-footer foot-right">
+        <p>Sub Total: ${calculateTotal()}</p>
+        
+        <button className="btn btn-outline custom-button-addcart" type="submit">
+            <FaDollarSign className="star-fill-icon" /> {""}Check Out: ${calculateTotal()}
+              </button>
+      </div>
+    </div>
   );
 };
 

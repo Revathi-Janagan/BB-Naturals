@@ -1,15 +1,15 @@
-import React from 'react'
-import RightHeader from './RightHeader'
-import RightDiv from './RightDiv'
+import React from "react";
+import RightHeader from "./RightHeader";
+import RightDiv from "./RightDiv";
 import "./RightContent.css";
 
-const RightContent = () => {
+const RightContent = ({ selectedItems, onRemoveItem }) => {
   return (
     <div className="right-content-container">
-      <RightHeader/>
-      <RightDiv />
+      <RightHeader />
+      <RightDiv selectedItems={selectedItems} onRemoveItem={onRemoveItem} />
     </div>
-  )
-}
+  );
+};
 
-export default RightContent
+export default RightContent;
