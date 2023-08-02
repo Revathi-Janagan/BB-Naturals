@@ -7,7 +7,8 @@ import IconsNav from "./IconsNavbar";
 const HeaderDash = ({ pageName }) => {
   return (
     <header>
-      <div className="header-top text-center d-flex align-items-center " style={{marginLeft : "-100px", width:"1500px"}}>
+      <div className="header-top text-center d-flex align-items-center " >
+        {/* //style={{marginLeft : "-100px", width:"114%"}} */}
         <div className="container header-container">
           <h3 className="title-pos m-auto">{pageName} - BB Naturals</h3>
         </div>

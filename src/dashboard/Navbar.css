@@ -1,12 +1,11 @@
 .navbar-search {
   background-color: #c9cdd3eb;
-  width: 1350px;
+  width: 107%;
 }
 
 .custom-input {
-  width: 1200px !important;
+  width: 900px !important;
   border: 1px solid black;
-  margin-right: -150px;
 }
 
 .plus-icon button {
@@ -16,7 +15,6 @@
   background-color: #fff;
   transition: background-color 0.3s;
   border: none;
-  margin-right: 10px;
   position: relative;
 }
 

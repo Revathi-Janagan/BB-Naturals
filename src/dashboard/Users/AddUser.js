@@ -7,15 +7,21 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 const AddUser = ({ show, onCancel }) => {
+  const [user,setUser] = useState([]);
   const handleClose = () => {
     onCancel();
   };
+  const handleAddNewUser = () =>{
+    // 
+    
+
+  }
 
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add New Customer</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -29,7 +35,18 @@ const AddUser = ({ show, onCancel }) => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
-            </Row>
+            </Row>    
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridUSerName">
+                <Form.Label>User Name</Form.Label>
+                <Form.Control type="text" placeholder="Enter user Name" />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" placeholder="Name" />
+              </Form.Group>
+            </Row>        
 
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Address</Form.Label>
@@ -70,8 +87,8 @@ const AddUser = ({ show, onCancel }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="primary" onClick={handleAddNewUser}>
+           Add New
           </Button>
         </Modal.Footer>
       </Modal>

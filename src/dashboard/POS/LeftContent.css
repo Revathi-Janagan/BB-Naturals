@@ -1,18 +1,14 @@
-
 .left-content-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    align-items: flex-start;
-    
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+  .left-content-container {
+    width: 80%;
+    margin: 0 auto;
   }
-  
-  @media screen and (max-width: 768px) {
-    .left-content-container {
-      
-      width: 80%;
-      margin: 0 auto; 
-    }
-  }
-  
+}

@@ -6,7 +6,7 @@ import Layout from '../Layout';
 
 const POS = () => {
   return (
-    <Layout pageName="POS">
+    <Layout pageName="POS" >
     <POSMain />
   </Layout>
   );

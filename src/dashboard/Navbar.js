@@ -17,7 +17,7 @@ const Navbar = () => {
     setHovered(false);
   };
   const closeModal = () => {
-    setShowForm(true);
+    setShowForm(false);
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light navbar-search ">
@@ -36,9 +36,7 @@ const Navbar = () => {
             </form>
           </div>
           <div
-            className={`d-flex align-items-center plus-icon ${
-              hovered ? "hovered" : ""
-            }`}
+            className={`d-flex align-items-center plus-icon ${hovered ? "hovered" : ""}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

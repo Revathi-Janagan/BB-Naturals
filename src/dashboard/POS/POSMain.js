@@ -26,11 +26,12 @@ const POSMain = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+   
 
   };
 
   return (
-    <div style={{ height: '100vh', position: 'relative' }}>
+    <div style={{ height: '75vh', position: 'relative' }}>
       <SplitPane split="vertical" sizes={sizes} onChange={setSizes}>
         <Pane>
           <div style={{ ...layoutCSS, background: '#ddd' }}>

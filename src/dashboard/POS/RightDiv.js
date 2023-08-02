@@ -13,7 +13,7 @@ import "./RightDiv.css"
 
 
 const columns = [
-  { id: 'image', label: 'Image', minWidth: 150 },
+  { id: 'image', label: 'Image', minWidth: 100 },
   { id: 'product', label: 'Product', minWidth: 100 },
   { id: 'price', label: 'Price', minWidth: 100, align: 'right' },
   { id: 'remove', label: 'Remove', minWidth: 100, align: 'center' }, 
@@ -47,8 +47,8 @@ const RightDiv = ({ selectedItems, onRemoveItem }) => {
 
   return (
     <div className="right-div-container custom-right-table">
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+      <Paper className='custom-alignment' sx={{ height:'60vh',width:'600px'}}>
+        <TableContainer sx={{ height:'50vh',width:'600px'}} >
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>

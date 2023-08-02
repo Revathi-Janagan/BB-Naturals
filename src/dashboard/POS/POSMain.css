@@ -10,14 +10,16 @@
   flex-direction: column;
   align-items: flex-start;
   border: 1px solid #ddd;
+ 
 }
 
 .right-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items:  flex-start;
   border: 1px solid #ddd;
+ 
 }
 
 @media screen and (max-width: 768px) {
