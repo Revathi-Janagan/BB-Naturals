@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import StickyHeader from "../StickyHeader";
 import axios from "../../config/axios";
+import { Button } from "@mui/material";
 
 const GridForDisplay = () => {
   const visibleColumns = [
@@ -41,7 +42,11 @@ const GridForDisplay = () => {
 
   return (
     <div>
+      <Button>ADD</Button>
+      <Button>Edit</Button>
+      <Button>Delete</Button>
       <Container style={{ marginTop: "20px" }}>
+        
         <Row>
           <Col xs={12}>
             <StickyHeader visibleColumns={visibleColumns} columns={columns} products={products} />

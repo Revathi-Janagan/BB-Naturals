@@ -1,13 +1,11 @@
 import React from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
+import { IconButton } from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-const StickyHeader = ({ visibleColumns, columns = [], products }) => {
+const StickyHeader = ({ visibleColumns, columns = [], products, handleAddToCart }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
-  console.log("Columns:", columns);
-  console.log("Visible Columns:", visibleColumns);
-  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -49,7 +47,7 @@ const StickyHeader = ({ visibleColumns, columns = [], products }) => {
                   <TableRow hover role="checkbox" tabIndex={-1} key={product.product_name}>
                     {visibleColumns.map((columnId) => (
                       <TableCell key={columnId} align={columns.find((c) => c.id === columnId).align || "left"}>
-                        {row[columnId]}
+                        {columnId === "add" ? columns.find((c) => c.id === columnId).format("", product, handleAddToCart) : row[columnId]}
                       </TableCell>
                     ))}
                   </TableRow>

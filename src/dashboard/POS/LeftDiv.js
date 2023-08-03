@@ -3,7 +3,6 @@ import axios from "../../config/axios";
 import StickyHeader from "../StickyHeader";
 import { IconButton } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import "./LeftDiv.css";
 
 const columnsForLeftDiv = [
   { id: "product_name", label: "Product", minWidth: 150 },
@@ -14,11 +13,7 @@ const columnsForLeftDiv = [
     minWidth: 100,
     align: "center",
     format: (value, row, handleAddToCart) => (
-      <IconButton
-        variant="outlined"
-        onClick={() => handleAddToCart(row)}
-        size="small"
-      >
+      <IconButton variant="outlined" onClick={() => handleAddToCart(row)} size="small">
         <AddShoppingCartIcon />
       </IconButton>
     ),
@@ -44,6 +39,7 @@ const LeftDiv = ({ onAddToCart }) => {
   }, []);
 
   const handleAddToCart = (row) => {
+    console.log("Adding to cart:", row);
     onAddToCart(row);
   };
 
