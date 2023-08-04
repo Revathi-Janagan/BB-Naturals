@@ -14,16 +14,17 @@ const GridForDisplay = () => {
     "regular_price",
     "sale_price",
   ];
-  const columns = [ 
-  { id: "product_name", label: "Product Name", align: "left", minWidth: 170 },
-  { id: "stock", label: "Stock", align: "right", minWidth: 100 },
-  { id: "categories", label: "Categories", align: "left", minWidth: 170 },
-  { id: "price", label: "Price", align: "right", minWidth: 100 },
-  { id: "regular_price", label: "Regular Price", align: "right", minWidth: 100 },
-  { id: "sale_price", label: "Sale Price", align: "right", minWidth: 100 },
-];
+  const columns = [
+    { id: "product_name", label: "Product Name", align: "left", minWidth: 170 },
+    { id: "stock", label: "Stock", align: "right", minWidth: 100 },
+    { id: "categories", label: "Categories", align: "left", minWidth: 170 },
+    { id: "price", label: "Price", align: "right", minWidth: 100 },
+    { id: "regular_price", label: "Regular Price", align: "right", minWidth: 100 },
+    { id: "sale_price", label: "Sale Price", align: "right", minWidth: 100 },
+  ];
 
   const [products, setProducts] = useState([]);
+  const [newRow, setNewRow] = useState(null);
 
   const getProducts = () => {
     axios
@@ -40,16 +41,56 @@ const GridForDisplay = () => {
     getProducts();
   }, []);
 
+  const handleAddRow = () => {
+    const newRowData = {
+      product_name: "New Product",
+      stock: 0,
+      categories: "",
+      price: 0,
+      regular_price: 0,
+      sale_price: 0,
+    };
+    setNewRow(newRowData);
+  };
+
+  const handleSaveRow = () => {
+    if (newRow) {
+      setProducts([...products, newRow]);
+      setNewRow(null);
+    }
+  };
+
+  const handleEditRow = (index, updatedRowData) => {
+    const updatedProducts = [...products];
+    updatedProducts[index] = updatedRowData;
+    setProducts(updatedProducts);
+  };
+
+  const handleDeleteRow = (index) => {
+    const updatedProducts = products.filter((_, i) => i !== index);
+    setProducts(updatedProducts);
+  };
+  const handleAddRowWithinTable = (newRowData) => {
+    setProducts([...products, newRowData]);
+    setNewRow(null);
+  };
+
   return (
     <div>
-      <Button>ADD</Button>
+      <Button onClick={handleAddRow}>ADD</Button>
+      <Button onClick={handleSaveRow}>Save</Button>
       <Button>Edit</Button>
-      <Button>Delete</Button>
       <Container style={{ marginTop: "20px" }}>
-        
         <Row>
           <Col xs={12}>
-            <StickyHeader visibleColumns={visibleColumns} columns={columns} products={products} />
+            <StickyHeader
+              visibleColumns={visibleColumns}
+              columns={columns}
+              products={products}
+              newRow={newRow}
+              onEditRow={handleEditRow}
+              onDeleteRow={handleDeleteRow}
+            />
           </Col>
         </Row>
       </Container>
