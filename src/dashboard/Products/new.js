@@ -1,3 +1,60 @@
+import React from "react";
+import { Button } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Popover from "@mui/material/Popover";
+
+const ProductPopover = ({
+  columns,
+  productData,
+  open,
+  onClose,
+  onSubmit,
+  onChange,
+  title,
+}) => {
+  return (
+    <Popover open={open} onClose={onClose}>
+      <form onSubmit={onSubmit}>
+        <Typography variant="h6" gutterBottom>
+          {title}
+        </Typography>
+        {columns.map((column) => (
+          <div key={column.id} style={{ padding: "8px" }}>
+            <Typography variant="subtitle1" gutterBottom>
+              {column.label}
+            </Typography>
+            <input
+              type="text"
+              id={column.id}
+              value={(productData && productData[column.id]) || ""}
+              onChange={(e) => onChange(e, column)}
+              style={{
+                width: "400px",
+                padding: "8px",
+                fontSize: "14px",
+                border: "1px solid #ccc",
+                borderRadius: "10px",
+              }}
+            />
+          </div>
+        ))}
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button style={{ marginRight: "8px" }} onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
+            Save
+          </Button>
+        </div>
+      </form>
+    </Popover>
+  );
+};
+
+export default ProductPopover;
+
+
+
 import React, { useState } from "react";
 import {
   Paper,
@@ -9,6 +66,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { FaEllipsisV } from "react-icons/fa";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
@@ -19,13 +77,13 @@ const StickyHeader = ({
   visibleColumns,
   columns = [],
   products,
+  handleAddToCart,
   handleOpenEditPopover,
-  handleDeleteProductAction, 
 }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null); // State for the Popover anchor element
+  const [selectedProduct, setSelectedProduct] = useState(null); // State for the selected product
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -37,10 +95,8 @@ const StickyHeader = ({
   };
 
   const handleEllipsisClick = (event, product) => {
-    // event.persist();
-  setAnchorEl(event.currentTarget);
-  setSelectedProduct(product);
- 
+    setAnchorEl(event.currentTarget);
+    setSelectedProduct(product);
   };
 
   const handleMenuClose = () => {
@@ -57,7 +113,6 @@ const StickyHeader = ({
   const handleDeleteProduct = (product) => {
     console.log("Deleting product:", product);
     handleMenuClose();
-    handleDeleteProductAction(product);
   };
 
   return (
@@ -113,8 +168,7 @@ const StickyHeader = ({
                             {/* Popover */}
                             <Popover
                               open={
-                                Boolean(anchorEl) &&
-                                selectedProduct === product
+                                Boolean(anchorEl) && selectedProduct === product
                               }
                               anchorEl={anchorEl}
                               onClose={handleMenuClose}
@@ -161,9 +215,12 @@ const StickyHeader = ({
                                   Delete
                                 </div>
                               </Typography>
-                              
                             </Popover>
                           </>
+                        ) : columnId === "add" ? (
+                          <IconButton
+                            onClick={() => handleAddToCart(product)}
+                          ></IconButton>
                         ) : (
                           row[columnId]
                         )}
@@ -189,3 +246,4 @@ const StickyHeader = ({
 };
 
 export default StickyHeader;
+

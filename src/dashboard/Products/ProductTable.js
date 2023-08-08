@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState, useEffect } from "react";
 import axios from "../../config/axios";
 import { Button } from "@mui/material";
 import StickyHeader from "../StickyHeader";
 import ProductPopover from "./ProductPopover";
 
-const GridForDisplay = () => {
+const ProductTable = () => {
   const visibleColumns = [
     "product_name",
     "stock",
@@ -15,12 +14,18 @@ const GridForDisplay = () => {
     "sale_price",
     "actions",
   ];
+
   const columns = [
     { id: "product_name", label: "Product Name", align: "left", minWidth: 170 },
     { id: "stock", label: "Stock", align: "right", minWidth: 100 },
     { id: "categories", label: "Categories", align: "left", minWidth: 170 },
     { id: "price", label: "Price", align: "right", minWidth: 100 },
-    { id: "regular_price", label: "Regular Price", align: "right", minWidth: 100 },
+    {
+      id: "regular_price",
+      label: "Regular Price",
+      align: "right",
+      minWidth: 100,
+    },
     { id: "sale_price", label: "Sale Price", align: "right", minWidth: 100 },
     {
       id: "actions",
@@ -31,12 +36,13 @@ const GridForDisplay = () => {
         <div>
           <Button onClick={() => handleEditProduct(row)}>Edit</Button>
           <Button onClick={() => handleDeleteProduct(row)}>Delete</Button>
-          <Button onClick={() => handleOpenEditPopover(row)}>Edit in Popover</Button>
+          <Button onClick={() => handleOpenEditPopover(row)}>
+            Edit in Popover
+          </Button>
         </div>
       ),
     },
   ];
-  
 
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({});
@@ -75,14 +81,22 @@ const GridForDisplay = () => {
 
   const handleCloseEditPopover = () => {
     setIsEditPopoverOpen(false);
+    setEditProduct(null);
   };
 
-  const handleInputChange = (e, column) => {
+  const handleInputChange = (e, column, isEditPopover) => {
     const { id, value } = e.target;
-    setNewProduct((prevProduct) => ({
-      ...prevProduct,
-      [id]: value,
-    }));
+    if (isEditPopover) {
+      setEditProduct((prevEditProduct) => ({
+        ...prevEditProduct,
+        [id]: value,
+      }));
+    } else {
+      setNewProduct((prevNewProduct) => ({
+        ...prevNewProduct,
+        [id]: value,
+      }));
+    }
   };
 
   const handleSaveNewProduct = async () => {
@@ -95,6 +109,7 @@ const GridForDisplay = () => {
         console.log("New product added successfully:", response.data);
         getProducts();
         setIsAddPopoverOpen(false);
+        setNewProduct({}); // Clear new product data after saving
       } catch (error) {
         console.error("Error adding new product:", error);
       }
@@ -110,8 +125,7 @@ const GridForDisplay = () => {
         );
         console.log("Product updated successfully:", response.data);
         getProducts();
-        setIsEditPopoverOpen(false);
-        setEditProduct(null);
+        handleCloseEditPopover();
       } catch (error) {
         console.error("Error updating product:", error);
       }
@@ -120,11 +134,21 @@ const GridForDisplay = () => {
 
   const handleEditProduct = (product) => {
     setEditProduct(product);
+    setIsEditPopoverOpen(true);
   };
 
-  const handleDeleteProduct = (product) => {
-    const updatedProducts = products.filter((p) => p !== product);
-    setProducts(updatedProducts);
+  const handleDeleteProduct = async (product) => {
+    console.log("Deleting product:", product);
+    try {
+        const response = await axios.delete(
+          `/api/products/deletefromproductlist/${product.id}`
+        );
+        console.log("Product deleted successfully:", response.data);
+        getProducts();
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+   
   };
 
   return (
@@ -140,10 +164,8 @@ const GridForDisplay = () => {
         visibleColumns={visibleColumns}
         columns={columns}
         products={products}
-        handleAddToCart={() => {
-          // You need to implement this function or remove it if not used
-        }}
-        handleOpenEditPopover={handleOpenEditPopover} // Pass the function here
+        handleOpenEditPopover={handleOpenEditPopover}
+        handleDeleteProductAction={handleDeleteProduct}
       />
 
       {/* Add Product Popover */}
@@ -153,7 +175,9 @@ const GridForDisplay = () => {
         open={isAddPopoverOpen}
         onClose={handleCloseAddPopover}
         onSubmit={handleSaveNewProduct}
-        onChange={handleInputChange}
+        onChange={(e, column, isEditPopover) =>
+          handleInputChange(e, column, isEditPopover)
+        }
         title="Add Product"
       />
 
@@ -164,11 +188,12 @@ const GridForDisplay = () => {
         open={isEditPopoverOpen}
         onClose={handleCloseEditPopover}
         onSubmit={handleSaveEditedProduct}
-        onChange={handleInputChange} // Update this if needed for edit product changes
+        onChange={handleInputChange}
         title="Edit Product"
+        editProduct={editProduct}  
       />
     </div>
   );
 };
 
-export default GridForDisplay;
+export default ProductTable;
