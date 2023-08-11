@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaEllipsisV } from "react-icons/fa";
 import {
   Paper,
   Table,
@@ -8,19 +9,21 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  IconButton,
+  Popover,
+  Typography,
 } from "@mui/material";
-import { FaEllipsisV } from "react-icons/fa";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const StickyHeader = ({
   visibleColumns,
   columns = [],
   products,
   handleOpenEditPopover,
-  handleDeleteProductAction, 
+  handleDeleteProductAction,
+  onAddToCart,
 }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -37,10 +40,12 @@ const StickyHeader = ({
   };
 
   const handleEllipsisClick = (event, product) => {
-    // event.persist();
-  setAnchorEl(event.currentTarget);
-  setSelectedProduct(product);
- 
+    if (event.target.tagName === "BUTTON") {
+      onAddToCart(product);
+      return;
+    }
+    setAnchorEl(event.currentTarget);
+    setSelectedProduct(product);
   };
 
   const handleMenuClose = () => {
@@ -98,11 +103,10 @@ const StickyHeader = ({
                       <TableCell
                         key={columnId}
                         align={
-                          columns.find((c) => c.id === columnId).align || "left"
+                          columns.find((c) => c.id === columnId)?.align || "left"
                         }
                       >
                         {columnId === "actions" ? (
-                          // Display the three-dot icon for "actions" column
                           <>
                             <FaEllipsisV
                               onClick={(event) =>
@@ -110,7 +114,6 @@ const StickyHeader = ({
                               }
                               style={{ cursor: "pointer" }}
                             />
-                            {/* Popover */}
                             <Popover
                               open={
                                 Boolean(anchorEl) &&
@@ -161,9 +164,16 @@ const StickyHeader = ({
                                   Delete
                                 </div>
                               </Typography>
-                              
                             </Popover>
                           </>
+                        ) : columnId === "add" ? (
+                          <IconButton
+                            variant="outlined"
+                            onClick={() => onAddToCart(product)}
+                            size="small"
+                          >
+                            <AddShoppingCartIcon />
+                          </IconButton>
                         ) : (
                           row[columnId]
                         )}

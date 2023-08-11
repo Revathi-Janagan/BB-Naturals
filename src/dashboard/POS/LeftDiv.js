@@ -3,25 +3,18 @@ import axios from "../../config/axios";
 import StickyHeader from "../StickyHeader";
 import { IconButton } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import "./LeftDiv.css";
 
 const columnsForLeftDiv = [
   { id: "product_name", label: "Product", minWidth: 150 },
-  { id: "price", label: "Price", minWidth: 100, align: "right" },
-  {
-    id: "add",
-    label: "Add to Cart",
-    minWidth: 100,
-    align: "center",
-    format: (value, row, handleAddToCart) => (
-      <IconButton variant="outlined" onClick={() => handleAddToCart(row)} size="small">
-        <AddShoppingCartIcon />
-      </IconButton>
-    ),
-  },
+  { id: "price", label: "Price", minWidth: 150, align: "right" },
+  { id: "add", label: "Add to Cart", minWidth: 100, align: "center" },
 ];
 
 const LeftDiv = ({ onAddToCart }) => {
   const [products, setProducts] = useState([]);
+  
+
 
   const getProducts = () => {
     axios
@@ -38,31 +31,25 @@ const LeftDiv = ({ onAddToCart }) => {
     getProducts();
   }, []);
 
-  const handleAddToCart = (row) => {
-    console.log("Adding to cart:", row);
-    onAddToCart(row);
+  const handleAddToCart = (product) => {
+    console.log("Adding to cart:", product);
+    
+    onAddToCart(product);
+    
   };
 
   const visibleColumnsForLeftDiv = ["product_name", "price", "add"];
-
-  const columnsWithActions = columnsForLeftDiv.map((column) =>
-    column.id === "add"
-      ? {
-          ...column,
-          format: (value, row) => column.format(value, row, handleAddToCart),
-        }
-      : column
-  );
 
   return (
     <div className="left-div-container custom-left-table">
       <StickyHeader
         className="specify-table-size"
         visibleColumns={visibleColumnsForLeftDiv}
-        columns={columnsWithActions}
+        columns={columnsForLeftDiv}
         products={products}
-        handleAddToCart={handleAddToCart}
+        onAddToCart={handleAddToCart}
       />
+       
     </div>
   );
 };

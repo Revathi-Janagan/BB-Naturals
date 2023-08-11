@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-import SplitPane, { Pane } from "split-pane-react";
+import React, { useState, useEffect } from "react";
+import SplitPane from "react-split-pane";
 import LeftContent from "./LeftContent";
 import RightContent from "./RightContent";
-import "./POSMain.css"; 
+import "./POSMain.css";
 
 const POSMain = () => {
-  const [sizes, setSizes] = useState([750, "50%", "auto"]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [initialPaneWidth, setInitialPaneWidth] = useState("50%");
+
+  useEffect(() => {
+    const screenWidth = window.innerWidth;
+    const calculatedWidth = Math.min(screenWidth * 0.6, "100%"); 
+    setInitialPaneWidth(calculatedWidth);
+  }, []);
 
   const handleAddToCart = (item) => {
     setSelectedItems((prevItems) => [...prevItems, item]);
@@ -20,27 +26,25 @@ const POSMain = () => {
     });
   };
 
-  const layoutCSS = {
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-
-  };
-
   return (
-    <div className="Pos-style" style={{ height: "75vh", position: "relative" }}>
-      <SplitPane split="vertical" sizes={sizes} onChange={setSizes} className='POSMain'>
-        <Pane>
-          <div style={{ ...layoutCSS, background: "#ddd" }} className="left-pane">
-            <LeftContent onAddToCart={handleAddToCart} />
-          </div>
-        </Pane>
-        <Pane>
-          <div style={{ ...layoutCSS, background: "#d5d7d9" }} className="right-pane">
-            <RightContent selectedItems={selectedItems} onRemoveItem={handleRemoveItem} />
-          </div>
-        </Pane>
+    <div className="pos-style">
+      <SplitPane
+        split="vertical"
+        defaultSize={initialPaneWidth}
+        minSize={"20%"}
+        maxSize={"90%"}
+        resizerStyle={{
+          background: "#dcdcdc",
+          width: "10px",
+          cursor: "col-resize",
+        }}
+      >
+        <div className="left-pane">
+          <LeftContent onAddToCart={handleAddToCart} />
+        </div>
+        <div className="right-pane">
+          <RightContent selectedItems={selectedItems} onRemoveItem={handleRemoveItem} />
+        </div>
       </SplitPane>
     </div>
   );

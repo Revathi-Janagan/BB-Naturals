@@ -1,5 +1,6 @@
 import React from "react";
 import LeftDiv from "./LeftDiv";
+import './LeftContent.css'
 
 const LeftContent = ({ onAddToCart }) => {
   return (

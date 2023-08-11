@@ -1,8 +1,12 @@
 .left-div-container {
-  width: 650px;
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+.custom-left-table{
+  width: 630px;
+  height: 100%;
+ 
 }
 
 .specify-table-size {
@@ -11,33 +15,32 @@
 }
 
 .specify-table-size .MuiTableContainer-root {
-  max-height: 100%; /* Adjust this value to control the maximum height of the table */
+  max-height: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
 .specify-table-size .MuiTableCell-root {
-  font-size: 14px; /* Adjust font size as needed */
-  padding: 8px 16px; /* Adjust cell padding as needed */
+  font-size: 14px;
+  padding: 8px 16px;
 }
 
 .specify-table-size .MuiTableHead-root {
-  background-color: #f5f5f5; /* Customize table header background color */
+  background-color: #f5f5f5;
 }
 
 .specify-table-size .MuiTableRow-root:hover {
-  background-color: #f9f9f9; /* Customize row hover background color */
+  background-color: #f9f9f9;
 }
 
 .specify-table-size .MuiTablePagination-caption {
-  font-size: 14px; /* Adjust pagination font size as needed */
+  font-size: 14px;
 }
 
 .specify-table-size .MuiTablePagination-actions {
-  font-size: 14px; /* Adjust pagination button font size as needed */
+  font-size: 14px;
 }
 
-/* Set the height of LeftDiv to match the height of the full left pane */
 .left-content-container.left-part {
   height: 100%;
 }

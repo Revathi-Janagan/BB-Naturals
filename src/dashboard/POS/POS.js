@@ -1,14 +1,13 @@
-
-import React from 'react';
-import HeaderDash from '../HeaderDash';
-import POSMain from './POSMain';
-import Layout from '../Layout';
+import React from "react";
+import HeaderDash from "../HeaderDash";
+import POSMain from "./POSMain";
+import Layout from "../Layout";
 
 const POS = () => {
   return (
-    <Layout pageName="POS" >
-    <POSMain />
-  </Layout>
+    <Layout pageName="POS">
+      <POSMain />
+    </Layout>
   );
 };
 
