@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 
 import "./RightDiv.css";
+import BillingForm from "./BillingForm";
 
 const columnsForRightDiv = [
   { id: "product_name", label: "Product", minWidth: 150 },
@@ -31,6 +32,8 @@ const columnsForRightDiv = [
 const RightDiv = ({ selectedRows, onRemoveItem }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [checkoutClicked, setCheckoutClicked] = useState(false); 
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -39,6 +42,9 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+  const handleCheckoutClick = () => {
+    setCheckoutClicked(true);
   };
   const totalPrice = selectedRows.reduce((total, row) => total + row.price, 0);
 
@@ -86,7 +92,7 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
           <Button variant="outlined" color="error" className="void-button" style={{marginRight:"10px" , width:"100px"}}>
             Void
           </Button>
-          <Button variant="contained" color="primary" className="checkout-button" style={{ width:"400px"}}>
+          <Button variant="contained" color="primary" className="checkout-button" style={{ width:"400px"}}  onClick={handleCheckoutClick}>
             Checkout ${totalPrice.toFixed(2)}
           </Button>
           
@@ -101,6 +107,7 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      {checkoutClicked && <BillingForm selectedRows={selectedRows} />}
     </div>
   );
 };

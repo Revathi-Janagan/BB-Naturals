@@ -12,10 +12,12 @@ const ProductPopover = ({
   onChange,
   title,
   editProduct,
+  selectedImage,
+  setSelectedImage,
 }) => {
   return (
     <Popover open={open} onClose={onClose}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit ={(e)=>onSubmit(e) }>
         <Typography variant="h6" gutterBottom>
           {title}
         </Typography>
@@ -26,21 +28,29 @@ const ProductPopover = ({
                 <Typography variant="subtitle1" gutterBottom>
                   {column.label}
                 </Typography>
-                <input
-                  type="text"
-                  id={column.id}
-                  value={(productData && productData[column.id]) || ""}
-                  onChange={(e) =>
-                    onChange(e, column, productData === editProduct)
-                  }
-                  style={{
-                    width: "400px",
-                    padding: "8px",
-                    fontSize: "14px",
-                    border: "1px solid #ccc",
-                    borderRadius: "10px",
-                  }}
-                />
+                {column.id === "product_image" ? (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setSelectedImage(e.target.files[0])}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id={column.id}
+                    value={(productData && productData[column.id]) || ""}
+                    onChange={(e) =>
+                      onChange(e, column, productData === editProduct)
+                    }
+                    style={{
+                      width: "400px",
+                      padding: "8px",
+                      fontSize: "14px",
+                      border: "1px solid #ccc",
+                      borderRadius: "10px",
+                    }}
+                  />
+                )}
               </div>
             );
           }

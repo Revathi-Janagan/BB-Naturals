@@ -5,7 +5,9 @@ import StickyHeader from "../StickyHeader";
 import ProductPopover from "./ProductPopover";
 
 const ProductTable = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
   const visibleColumns = [
+    "product_image",
     "product_name",
     "stock",
     "categories",
@@ -16,6 +18,23 @@ const ProductTable = () => {
   ];
 
   const columns = [
+    {
+      id: "product_image",
+      label: "Product Image",
+      align: "left",
+      minWidth: 100,
+      render: (row) => {
+        const imageUrl = row.product_image;
+        console.log("Image URL:", imageUrl);
+        return (
+          <img
+            src={imageUrl}
+            alt={row.product_name}
+            style={{ width: "50px", height: "50px", objectFit: "cover" }}
+          />
+        );
+      },
+    },
     { id: "product_name", label: "Product Name", align: "left", minWidth: 170 },
     { id: "stock", label: "Stock", align: "right", minWidth: 100 },
     { id: "categories", label: "Categories", align: "left", minWidth: 170 },
@@ -43,7 +62,6 @@ const ProductTable = () => {
       ),
     },
   ];
-
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({});
   const [editProduct, setEditProduct] = useState(null);
@@ -59,9 +77,7 @@ const ProductTable = () => {
       })
       .catch((error) => console.error("Error fetching products:", error));
   };
-
   useEffect(() => {
-    console.log("Fetching products...");
     getProducts();
   }, []);
 
@@ -99,24 +115,36 @@ const ProductTable = () => {
     }
   };
 
-  const handleSaveNewProduct = async () => {
+  const handleSaveNewProduct = async (e) => {
+    e.preventDefault();
     if (Object.keys(newProduct).length > 0) {
       try {
+        const formData = new FormData();
+        formData.append("product_image", selectedImage);
+        formData.append("product_name", newProduct.product_name);
+        formData.append("stock", newProduct.stock);
+        formData.append("categories", newProduct.categories);
+        formData.append("price", newProduct.price);
+        formData.append("regular_price", newProduct.regular_price);
+        formData.append("sale_price", newProduct.sale_price);
         const response = await axios.post(
           "/api/products/addnewproducts",
-          newProduct
+          formData
         );
-        console.log("New product added successfully:", response.data);
         getProducts();
+
+        console.log("New product added successfully:", response.data);
         setIsAddPopoverOpen(false);
-        setNewProduct({}); // Clear new product data after saving
+        setNewProduct({});
+        setSelectedImage(null);
       } catch (error) {
         console.error("Error adding new product:", error);
       }
     }
   };
 
-  const handleSaveEditedProduct = async () => {
+  const handleSaveEditedProduct = async (e) => {
+    e.preventDefault();
     if (editProduct) {
       try {
         const response = await axios.put(
@@ -140,15 +168,14 @@ const ProductTable = () => {
   const handleDeleteProduct = async (product) => {
     console.log("Deleting product:", product);
     try {
-        const response = await axios.delete(
-          `/api/products/deletefromproductlist/${product.id}`
-        );
-        console.log("Product deleted successfully:", response.data);
-        getProducts();
-      } catch (error) {
-        console.error("Error deleting product:", error);
-      }
-   
+      const response = await axios.delete(
+        `/api/products/deletefromproductlist/${product.id}`
+      );
+      console.log("Product deleted successfully:", response.data);
+      getProducts();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
 
   return (
@@ -156,7 +183,10 @@ const ProductTable = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={handleOpenAddPopover}
+        onClick={(e) => {
+          e.preventDefault();
+          handleOpenAddPopover();
+        }}
       >
         ADD NEW PRODUCT
       </Button>
@@ -179,6 +209,8 @@ const ProductTable = () => {
           handleInputChange(e, column, isEditPopover)
         }
         title="Add Product"
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
       />
 
       {/* Edit Product Popover */}
@@ -190,7 +222,9 @@ const ProductTable = () => {
         onSubmit={handleSaveEditedProduct}
         onChange={handleInputChange}
         title="Edit Product"
-        editProduct={editProduct}  
+        editProduct={editProduct}
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
       />
     </div>
   );
