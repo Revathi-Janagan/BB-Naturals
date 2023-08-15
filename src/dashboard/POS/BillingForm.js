@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -8,45 +8,35 @@ import "jspdf-autotable";
 
 const BillingForm = ({ selectedRows }) => {
   const totalPrice = selectedRows.reduce((total, row) => total + row.price, 0);
+  const pdfRef = useRef();
 
   const generatePDF = () => {
     const pdf = new jsPDF();
-    const tableColumnWidths = [100, 50]; // Adjust the column widths as needed
-    const tableHeaders = ["Product", "Price"];
-    let yPosition = 30;
-  
     pdf.setFontSize(20);
-    pdf.text("Your Order", 105, 15);
-  
+    pdf.text("Your Order", 15, 15);
+
     const tableData = selectedRows.map((row) => [
       row.product_name,
       `$${row.price.toFixed(2)}`,
     ]);
-  
+
     pdf.autoTable({
-      head: [tableHeaders],
+      head: [["Product Name", "Price"]],
       body: tableData,
-      startY: yPosition,
-      margin: { top: 20 },
-      columnStyles: { 0: { cellWidth: tableColumnWidths[0] } },
+      startY: 30,
+      styles: { fontSize: 12, valign: "middle", halign: "center" },
+      columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } },
     });
-  
-    yPosition = pdf.previousAutoTable.finalY + 10;
-  
-    pdf.text(`Total Price: $${totalPrice.toFixed(2)}`, 30, yPosition);
-  
-    const fileName = "billing_form.pdf";
-    const options = {
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    };
-  
-    pdf.save(fileName, options);
+
+    pdf.text(
+      `Total Price: $${totalPrice.toFixed(2)}`,
+      15,
+      pdf.autoTable.previous.finalY + 10
+    );
+
+    const blobUrl = URL.createObjectURL(pdf.output("blob"));
+    pdfRef.current.src = blobUrl;
   };
-  
-  
-  
 
   return (
     <div className="billing-form-container">
@@ -84,6 +74,11 @@ const BillingForm = ({ selectedRows }) => {
           </Button>
         </Grid>
       </Paper>
+      <iframe
+        ref={pdfRef}
+        title="Billing PDF"
+        style={{ width: "100%", height: "500px", marginTop: "20px" }}
+      ></iframe>
     </div>
   );
 };
