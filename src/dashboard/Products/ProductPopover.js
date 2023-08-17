@@ -17,7 +17,7 @@ const ProductPopover = ({
 }) => {
   return (
     <Popover open={open} onClose={onClose}>
-      <form onSubmit ={(e)=>onSubmit(e) }>
+      <form onSubmit ={(e)=>onSubmit(e) } enctype="multipart/form-data">
         <Typography variant="h6" gutterBottom>
           {title}
         </Typography>

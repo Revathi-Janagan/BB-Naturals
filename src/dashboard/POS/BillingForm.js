@@ -1,14 +1,47 @@
-import React, { useRef } from "react";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import React, { useState, useEffect } from "react";
+import axios from "../../config/axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableFooter from "@mui/material/TableFooter";
+import TablePagination from "@mui/material/TablePagination";
 
 const BillingForm = ({ selectedRows }) => {
-  const totalPrice = selectedRows.reduce((total, row) => total + row.price, 0);
-  const pdfRef = useRef();
+  const [recipientEmail, setRecipientEmail] = useState("");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [showReview, setShowReview] = useState(false);
+  const [emailSentSuccess, setEmailSentSuccess] = useState(false); // New state for email sending success
+
+  useEffect(() => {
+    if (emailSentSuccess) {
+      const timeoutId = setTimeout(() => {
+        setEmailSentSuccess(false);
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [emailSentSuccess]);
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  const handleCheckoutClick = () => {
+    setShowReview(true); // Set the state to show the review when "Checkout" is clicked
+  };
 
   const generatePDF = () => {
     const pdf = new jsPDF();
@@ -28,57 +61,109 @@ const BillingForm = ({ selectedRows }) => {
       columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } },
     });
 
+    const totalPrice = selectedRows.reduce(
+      (total, row) => total + row.price,
+      0
+    );
     pdf.text(
       `Total Price: $${totalPrice.toFixed(2)}`,
       15,
       pdf.autoTable.previous.finalY + 10
     );
 
-    const blobUrl = URL.createObjectURL(pdf.output("blob"));
-    pdfRef.current.src = blobUrl;
+    return pdf.output("datauristring");
   };
 
+  const sendEmail = async () => {
+    const pdfBase64 = generatePDF();
+
+    const emailData = {
+      name: "Revathi",
+      email: recipientEmail,
+      pdfBase64: pdfBase64,
+    };
+
+    try {
+      const response = await axios.post("/api/pos/send-email", emailData);
+      console.log(response.data.message);
+      setEmailSentSuccess(true);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
+
+  const totalAmount = selectedRows.reduce((total, row) => total + row.price, 0);
+
   return (
-    <div className="billing-form-container">
-      <Paper sx={{ width: "100%", overflow: "hidden", padding: "24px" }}>
-        <Typography variant="h4" gutterBottom>
-          Your Order
+    <div>
+      <Paper sx={{ padding: "20px" }}>
+        <Typography variant="h5" gutterBottom>
+          Review Your Order
         </Typography>
-        <ul style={{ listStyleType: "none", padding: 0 }}>
-          {selectedRows.map((row) => (
-            <li
-              key={row.id}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "8px",
-                borderBottom: "1px solid #ccc",
-                paddingBottom: "8px",
-              }}
-            >
-              <Typography style={{ fontWeight: "bold" }}>
-                {row.product_name}
-              </Typography>
-              <Typography>${row.price.toFixed(2)}</Typography>
-            </li>
-          ))}
-        </ul>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={generatePDF}
-          >
-            Proceed to Payment (${totalPrice.toFixed(2)})
-          </Button>
-        </Grid>
+        {showReview && (
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Product Name</TableCell>
+                  <TableCell align="right">Price</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {selectedRows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell>{row.product_name}</TableCell>
+                      <TableCell align="right">
+                        ${row.price.toFixed(2)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TableCell colSpan={2} align="right">
+                    Total: ${totalAmount.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 20]}
+              component="div"
+              count={selectedRows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </TableContainer>
+        )}
+        <input
+          type="email"
+          placeholder="Recipient Email"
+          value={recipientEmail}
+          onChange={(e) => setRecipientEmail(e.target.value)}
+        />
+        <Button onClick={sendEmail} variant="contained" color="primary">
+          Send Email
+        </Button>
+        <Button
+          onClick={handleCheckoutClick}
+          variant="contained"
+          color="primary"
+        >
+          Make View
+        </Button>
       </Paper>
-      <iframe
-        ref={pdfRef}
-        title="Billing PDF"
-        style={{ width: "100%", height: "500px", marginTop: "20px" }}
-      ></iframe>
+      {emailSentSuccess && (
+        <h4 style={{ color: "green" }}>Email sent successfully!</h4>
+      )}
+
+      <a href={generatePDF()} download="invoice.pdf">
+        Download Invoice PDF
+      </a>
     </div>
   );
 };

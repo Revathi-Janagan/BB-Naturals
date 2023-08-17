@@ -69,14 +69,20 @@ const ProductTable = () => {
   const [isEditPopoverOpen, setIsEditPopoverOpen] = useState(false);
 
   const getProducts = () => {
-    axios
-      .get("/api/products/getproducts")
-      .then((response) => {
-        console.log(response);
-        setProducts(response.data.data);
-      })
-      .catch((error) => console.error("Error fetching products:", error));
+    try {
+      axios.get("/api/products/getproducts")
+        .then((response) => {
+          // console.log(response);
+          setProducts(response.data.data);
+        })
+        .catch((error) => {
+          console.error("Error handling response:", error);
+        });
+    } catch (error) {
+      console.error("Error making request:", error);
+    }
   };
+  
   useEffect(() => {
     getProducts();
   }, []);
@@ -131,6 +137,7 @@ const ProductTable = () => {
           "/api/products/addnewproducts",
           formData
         );
+        console.log("Response from server:", response.data);
         getProducts();
 
         console.log("New product added successfully:", response.data);

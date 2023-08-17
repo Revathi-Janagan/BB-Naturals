@@ -1,7 +1,7 @@
 .right-content-container {
   display: flex;
   flex-direction: column;
-  height: 65vh;
+  height: 100%;
  
 }
 
