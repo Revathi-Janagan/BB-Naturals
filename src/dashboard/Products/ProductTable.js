@@ -70,9 +70,9 @@ const ProductTable = () => {
 
   const getProducts = () => {
     try {
-      axios.get("/api/products/getproducts")
+      axios
+        .get("/api/products/getproducts")
         .then((response) => {
-          // console.log(response);
           setProducts(response.data.data);
         })
         .catch((error) => {
@@ -82,7 +82,7 @@ const ProductTable = () => {
       console.error("Error making request:", error);
     }
   };
-  
+
   useEffect(() => {
     getProducts();
   }, []);
