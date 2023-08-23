@@ -11,7 +11,7 @@ import { Button } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 
 import "./RightDiv.css";
-import BillingForm from "./BillingForm";
+import BillingForm from "../POS/Billing/BillingForm";
 
 const columnsForRightDiv = [
   { id: "product_name", label: "Product", minWidth: 150 },
@@ -23,7 +23,7 @@ const columnsForRightDiv = [
     align: "center",
     format: (value, row, onRemoveItem) => (
       <Button variant="outlined" onClick={() => onRemoveItem(row)}>
-        -
+        Remove
       </Button>
     ),
   },
@@ -32,8 +32,7 @@ const columnsForRightDiv = [
 const RightDiv = ({ selectedRows, onRemoveItem }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [checkoutClicked, setCheckoutClicked] = useState(false); 
-
+  const [checkoutClicked, setCheckoutClicked] = useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -73,13 +72,11 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
                   <TableRow key={row.id}>
                     {columnsForRightDiv.map((column) => (
                       <TableCell key={column.id} align={column.align}>
-                        {/* Check if the column is the "remove" column */}
                         {column.id === "remove"
                           ? column.format && typeof column.format === "function"
                             ? column.format(column.id, row, onRemoveItem)
                             : ""
-                          : // Render the cell content for other columns
-                            row[column.id]}
+                          : row[column.id]}
                       </TableCell>
                     ))}
                   </TableRow>
@@ -88,14 +85,23 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
           </Table>
         </TableContainer>
         <div className="footer-buttons">
-        
-          <Button variant="outlined" color="error" className="void-button" style={{marginRight:"10px" , width:"100px"}}>
+          <Button
+            variant="outlined"
+            color="error"
+            className="void-button"
+            style={{ marginRight: "10px", width: "100px" }}
+          >
             Void
           </Button>
-          <Button variant="contained" color="primary" className="checkout-button" style={{ width:"400px"}}  onClick={handleCheckoutClick}>
+          <Button
+            variant="contained"
+            color="primary"
+            className="checkout-button"
+            style={{ width: "400px" }}
+            onClick={handleCheckoutClick}
+          >
             Checkout ${totalPrice.toFixed(2)}
           </Button>
-          
         </div>
         <TablePagination
           rowsPerPageOptions={[10, 25, 50]}
