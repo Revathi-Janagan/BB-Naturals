@@ -10,8 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
-import EmailSender from "./EmailSender"; // Import the EmailSender component
-import PDFGenerator from "./PDFGenerator"; // Import the PDFGenerator component
+import EmailSender from "./EmailSender";
+import PDFGenerator from "./PDFGenerator";
 
 const BillingForm = ({ selectedRows }) => {
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -24,7 +24,7 @@ const BillingForm = ({ selectedRows }) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
@@ -45,7 +45,7 @@ const BillingForm = ({ selectedRows }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Product Name</TableCell>
+                  <TableCell align="left">Product Name</TableCell>
                   <TableCell align="right">Price</TableCell>
                 </TableRow>
               </TableHead>
@@ -54,16 +54,14 @@ const BillingForm = ({ selectedRows }) => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <TableRow key={row.id}>
-                      <TableCell>{row.product_name}</TableCell>
-                      <TableCell align="right">
-                        ${row.price.toFixed(2)}
-                      </TableCell>
+                      <TableCell align="left">{row.product_name}</TableCell>
+                      <TableCell align="right">${row.price.toFixed(2)}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <TableCell colSpan={2} align="right">
+                  <TableCell colSpan={2} align="right" style={{fontSize:"16px"}}>
                     Total: ${totalAmount.toFixed(2)}
                   </TableCell>
                 </TableRow>
@@ -78,6 +76,8 @@ const BillingForm = ({ selectedRows }) => {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+
+           
           </TableContainer>
         )}
         <EmailSender
@@ -85,7 +85,6 @@ const BillingForm = ({ selectedRows }) => {
           selectedRows={selectedRows}
           setRecipientEmail={setRecipientEmail}
         />{" "}
-       
         <Button
           onClick={handleCheckoutClick}
           variant="contained"

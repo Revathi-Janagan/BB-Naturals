@@ -1,4 +1,4 @@
-// EmailSender.js
+
 import React, { useState } from "react";
 import axios from "../../../config/axios";
 import Button from "@mui/material/Button";

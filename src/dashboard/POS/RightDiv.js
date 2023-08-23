@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,11 +6,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Button } from "@mui/material";
+import { Button, Popover, Typography } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
+import BillingForm from "../POS/Billing/BillingForm";
 
 import "./RightDiv.css";
-import BillingForm from "../POS/Billing/BillingForm";
 
 const columnsForRightDiv = [
   { id: "product_name", label: "Product", minWidth: 150 },
@@ -31,8 +30,8 @@ const columnsForRightDiv = [
 
 const RightDiv = ({ selectedRows, onRemoveItem }) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [checkoutClicked, setCheckoutClicked] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [anchorEl, setAnchorEl] = useState(null); // Anchor element for the popover
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -42,9 +41,15 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const handleCheckoutClick = () => {
-    setCheckoutClicked(true);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
   const totalPrice = selectedRows.reduce((total, row) => total + row.price, 0);
 
   return (
@@ -98,10 +103,36 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
             color="primary"
             className="checkout-button"
             style={{ width: "400px" }}
-            onClick={handleCheckoutClick}
+            onClick={handlePopoverOpen} // Open the popover
           >
             Checkout ${totalPrice.toFixed(2)}
           </Button>
+          {/* Popover for reviewing the order */}
+          <Popover
+            // style={{ height: "100%", width: "600px", marginLeft: "-100px" }}
+            open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            PaperProps={{
+              style: { width: "50%" }, 
+            }}
+          >
+            <div style={{ maxHeight: "700px", overflowY: "auto" ,marginBottom:"400px"}}>
+              <BillingForm
+                selectedRows={selectedRows}
+                columnsForRightDiv={columnsForRightDiv}
+                onRemoveItem={onRemoveItem}
+              />
+            </div>
+          </Popover>
         </div>
         <TablePagination
           rowsPerPageOptions={[10, 25, 50]}
@@ -113,7 +144,6 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      {checkoutClicked && <BillingForm selectedRows={selectedRows} />}
     </div>
   );
 };
