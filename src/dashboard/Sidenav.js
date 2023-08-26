@@ -13,7 +13,7 @@ const Sidenav = () => {
     >
       <ul className="sidenav-menu">
         <li className="sidenav-item">
-          <a className="sidenav-link" href="/" title="Products">
+          <a className="sidenav-link" href="/products" title="Products">
             <FaBox className="sidenav-icon" />
             <span className="tooltip-text">Products</span>
           </a>

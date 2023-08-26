@@ -21,6 +21,10 @@ const EmailSender = ({ recipientEmail, selectedRows, setRecipientEmail  }) => {
       const response = await axios.post("/api/pos/send-email", emailData);
       console.log(response.data.message);
       setEmailSentSuccess(true);
+      setRecipientEmail("");
+      setTimeout(() => {
+        setEmailSentSuccess(false);
+      }, 5000); 
     } catch (error) {
       console.error("Error sending email:", error);
     }

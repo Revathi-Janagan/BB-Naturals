@@ -32,7 +32,7 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [anchorEl, setAnchorEl] = useState(null); // Anchor element for the popover
-
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -49,6 +49,10 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
+  const handleClickVoid = () =>{
+    selectedRows.forEach((row) => onRemoveItem(row));
+    setPage(0);
+  }
 
   const totalPrice = selectedRows.reduce((total, row) => total + row.price, 0);
 
@@ -95,6 +99,7 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
             color="error"
             className="void-button"
             style={{ marginRight: "10px", width: "100px" }}
+            onClick={handleClickVoid}
           >
             Void
           </Button>
@@ -103,13 +108,12 @@ const RightDiv = ({ selectedRows, onRemoveItem }) => {
             color="primary"
             className="checkout-button"
             style={{ width: "400px" }}
-            onClick={handlePopoverOpen} // Open the popover
+            onClick={handlePopoverOpen} 
           >
             Checkout ${totalPrice.toFixed(2)}
           </Button>
-          {/* Popover for reviewing the order */}
-          <Popover
-            // style={{ height: "100%", width: "600px", marginLeft: "-100px" }}
+         
+          <Popover           
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
             onClose={handlePopoverClose}

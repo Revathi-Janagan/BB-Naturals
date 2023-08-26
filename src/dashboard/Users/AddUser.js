@@ -12,7 +12,7 @@ const AddUser = ({ show, onCancel }) => {
     onCancel();
   };
   const handleAddNewUser = () =>{
-    // 
+    
     
 
   }
@@ -92,6 +92,7 @@ const AddUser = ({ show, onCancel }) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </>
   );
 };
